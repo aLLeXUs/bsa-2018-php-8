@@ -4,7 +4,7 @@
 
 @section('content')
     @empty($currencies)
-        <p>No currencies</p>
+        <p class="text-center">No currencies</p>
     @else
         <table class="table">
             <thead>
@@ -22,17 +22,22 @@
                                 href="{{ route('currencies.show', $currency['id']) }}">{{ $currency['title'] }}</a></td>
                     <td>{{ $currency['short_name'] }}</td>
                     <td>{{ $currency['price'] }}</td>
-                    <td class="form-inline">
-                        <a href="{{ route('currencies.edit', $currency['id']) }}" title="Edit"><i class="fas fa-edit"></i> Edit</a>
-                        <form method="post" action="{{ route('currencies.destroy', $currency['id']) }}">
-                            @csrf
-                            {{ method_field('DELETE') }}
-                            <button type="submit" title="Delete" class="btn btn-link"><i class="fas fa-trash-alt"></i> Delete</button>
-                        </form>
+                    <td>
+                        <a href="{{ route('currencies.show', $currency['id']) }}" class="btn btn-link py-0" title="View"><i class="fas fa-eye"></i> View</a>
+                        <a href="{{ route('currencies.edit', $currency['id']) }}" class="btn btn-link py-0" title="Edit"><i class="fas fa-edit"></i> Edit</a>
+                        <button title="Delete" class="btn btn-link py-0" onclick="event.preventDefault();
+                                document.getElementById('delete-form').action = '{{ route('currencies.destroy', $currency['id']) }}';
+                                document.getElementById('delete-form').submit();">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
+        <form id="delete-form" method="post" style="display: none">
+            @csrf
+            {{ method_field('DELETE') }}
+        </form>
     @endisset
 @endsection

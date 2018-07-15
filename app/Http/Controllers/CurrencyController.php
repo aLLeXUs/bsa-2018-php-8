@@ -53,6 +53,9 @@ class CurrencyController extends Controller
     public function show($id)
     {
         $currency = Currency::find($id);
+        if ($currency === null) {
+            abort(404);
+        }
         return view('currencies.show', ['currency' => $currency->toArray()]);
     }
 
@@ -65,6 +68,9 @@ class CurrencyController extends Controller
     public function edit($id)
     {
         $currency = Currency::find($id);
+        if ($currency === null) {
+            abort(404);
+        }
         return view('currencies.edit', ['currency' => $currency->toArray()]);
     }
 
@@ -78,6 +84,9 @@ class CurrencyController extends Controller
     public function update(CurrencyRequest $request, $id)
     {
         $currency = Currency::find($id);
+        if ($currency === null) {
+            abort(404);
+        }
         $currency->title = $request->input('title');
         $currency->short_name = $request->input('short_name');
         $currency->logo_url = $request->input('logo_url');
@@ -95,6 +104,9 @@ class CurrencyController extends Controller
     public function destroy($id)
     {
         $currency = Currency::find($id);
+        if ($currency === null) {
+            abort(404);
+        }
         $currency->delete();
         return redirect()->route('currencies.index');
     }

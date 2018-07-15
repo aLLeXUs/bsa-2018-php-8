@@ -2,6 +2,19 @@
 
 @section('title', "Currency - {$currency['title']}")
 
+@section('header')
+    @component('components.headerLink', [
+        'link' => route('currencies.index')
+    ])
+        <i class="fas fa-dollar-sign"></i> Currencies
+    @endcomponent
+    @component('components.headerLink', [
+        'link' => route('currencies.add')
+    ])
+        <i class="fas fa-plus"></i> Add
+    @endcomponent
+@endsection
+
 @section('content')
     <table class="table">
         <tbody>
